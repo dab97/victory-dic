@@ -29,10 +29,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
     <>
       <Head>
         <title>"Диктант Победы 2025"</title>
-        <meta
-          property="og:image"
-          content="https://victory-dict.vercel.app/og-image.png"
-        />
+        <meta property="og:image" content="https://victory-dict.vercel.app/og-image.png" />
       </Head>
       <main className="mx-auto max-w-[1960px] p-4">
         {photoId && (

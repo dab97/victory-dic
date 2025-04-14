@@ -6,15 +6,9 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <link rel="icon" href="/favicon.png" />
-          <meta
-            name="description"
-            content="Диктант Победы 2025"
-          />
+          <meta name="description" content="Диктант Победы 2025" />
           <meta property="og:site_name" content="victory-dict.vercel.app" />
-          <meta
-            property="og:description"
-            content="Диктант Победы 2025"
-          />
+          <meta property="og:description" content="Диктант Победы 2025" />
           <meta property="og:title" content="Диктант Победы 2025" />
         </Head>
         <body className="bg-black antialiased">
