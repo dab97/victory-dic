@@ -48,7 +48,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
             src="/logo.png"
             width={720}
             height={664}
-            sizes="(max-width: 664px) 100vw,
+            sizes="(max-width: 664.516px) 100vw,
                   (max-width: 1280px) 50vw,
                   (max-width: 1536px) 33vw,
                   25vw"
