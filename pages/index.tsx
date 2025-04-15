@@ -43,7 +43,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
         <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
           <Image
             alt="Диктант Победы 2025"
-            className="aspect-3/4 object-cover transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110 mb-5 border border-red-950"
+            className="object-cover transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110 mb-5 border border-red-950"
             style={{ transform: "translate3d(0, 0, 0)" }}
             src="/logo.png"
             width={720}
