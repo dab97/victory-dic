@@ -131,44 +131,44 @@ const Home: NextPage<{ images: ImageProps[] }> = ({ images }) => {
 
           {filteredImages.length === 0 && (
             <div className="col-span-full py-12">
-            <div className="flex flex-col items-center justify-center space-y-6 text-center">
-              <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-red-600 to-red-800 p-4 shadow-lg shadow-red-900/30">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-16 w-16 text-white/90"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
-                  <path d="M4 16v2a2 2 0 0 0 2 2h2" />
-                  <path d="M16 4h2a2 2 0 0 1 2 2v2" />
-                  <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
-                  <path d="M9 10h.01" />
-                  <path d="M15 10h.01" />
-                  <path d="M9.5 15.1a3.5 3.5 0 0 1 5 0" />
-                </svg>
-              </div>
-              
-              <div className="max-w-2xl space-y-3">
-                <h2 className="text-2xl font-semibold tracking-tight text-white/90 sm:text-3xl">
-                  Ничего не найдено по запросу
-                </h2>
-                <div className="text-lg sm:text-xl">
-                  <span className="bg-gradient-to-r from-red-400 to-red-600 bg-clip-text font-medium text-transparent">
-                    "{searchQuery}"
-                  </span>
+              <div className="flex flex-col items-center justify-center space-y-6 text-center">
+                <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-red-600 to-red-800 p-4 shadow-lg shadow-red-900/30">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-16 w-16 text-white/90"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
+                    <path d="M4 16v2a2 2 0 0 0 2 2h2" />
+                    <path d="M16 4h2a2 2 0 0 1 2 2v2" />
+                    <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
+                    <path d="M9 10h.01" />
+                    <path d="M15 10h.01" />
+                    <path d="M9.5 15.1a3.5 3.5 0 0 1 5 0" />
+                  </svg>
                 </div>
-                <p className="text-sm text-red-300/80 sm:text-base">
-                  Проверьте правильность написания или попробуйте другой запрос
-                </p>
+
+                <div className="max-w-2xl space-y-3">
+                  <h2 className="text-2xl font-semibold tracking-tight text-white/90 sm:text-3xl">
+                    Ничего не найдено по запросу
+                  </h2>
+                  <div className="text-lg sm:text-xl">
+                    <span className="bg-gradient-to-r from-red-400 to-red-600 bg-clip-text font-medium text-transparent">
+                      "{searchQuery}"
+                    </span>
+                  </div>
+                  <p className="text-sm text-red-300/80 sm:text-base">
+                    Проверьте правильность написания или попробуйте другой запрос
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
           )}
         </div>
       </main>
