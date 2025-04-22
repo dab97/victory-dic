@@ -40,11 +40,11 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
             }}
           />
         )}
-        <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
           <Image
             alt="Диктант Победы 2025"
-            className="object-cover transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110 mb-5 border border-red-950"
-            style={{ transform: "translate3d(0, 0, 0)" }}
+            className="object-cover transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110 border border-red-950"            
+            style={{ transform: "translate3d(0, 0, 0)", width: "100%", height: "auto" }}
             src="/logo.png"
             width={720}
             height={480}
@@ -60,7 +60,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
               as={`/victory/${id}`}
               ref={id === Number(lastViewedPhoto) ? lastViewedPhotoRef : null}
               shallow
-              className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
+              className="after:content group relative block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
             >
               <Image
                 alt="Диктант Победы 2025"
@@ -92,7 +92,7 @@ export default Home;
 export async function getStaticProps() {
   const results = await cloudinary.v2.search
     .expression(`folder:${process.env.CLOUDINARY_FOLDER}/*`)
-    .sort_by("public_id", "desc")
+    .sort_by("public_id", "asc")
     .max_results(400)
     .execute();
   let reducedResults: ImageProps[] = [];
