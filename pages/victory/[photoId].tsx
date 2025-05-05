@@ -62,8 +62,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       props: {
         currentPhoto,
       },
-      // Ревалидация каждые 60 минут
-      revalidate: 60 * 60,
+      revalidate: 60 * 60, // Ревалидация каждые 60 минут
     };
   } catch (error) {
     console.error("Error generating photo page:", error);
