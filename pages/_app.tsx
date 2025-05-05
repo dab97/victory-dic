@@ -1,9 +1,15 @@
+import { Buffer } from 'buffer';
 import type { AppProps } from "next/app";
 import "../styles/index.css";
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+// Полифилл для Buffer
+if (typeof window !== 'undefined' && !window.Buffer) {
+  window.Buffer = Buffer;
+}
+
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Component {...pageProps} />
@@ -12,3 +18,5 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     </>
   );
 }
+
+export default MyApp;

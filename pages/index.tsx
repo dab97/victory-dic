@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
+import pLimit from "p-limit";
 import Modal from "../components/Modal";
 import cloudinary from "../utils/cloudinary";
 import getBase64ImageUrl from "../utils/generateBlurPlaceholder";
@@ -39,7 +40,6 @@ const Home: NextPage<{ images: ImageProps[] }> = ({ images }) => {
       </Head>
 
       <main className="mx-auto max-w-[1960px] flex-1 p-4">
-        {/* Поисковая строка */}
         <div className="mb-6 flex justify-end">
           <div className="relative w-full max-w-[470px]">
             <input
@@ -50,7 +50,7 @@ const Home: NextPage<{ images: ImageProps[] }> = ({ images }) => {
               className="w-full rounded-lg border border-gray-400 bg-black px-4 py-3 pr-12
                 text-base text-gray-50 shadow-xl shadow-red-900/20 transition-all duration-200
                 placeholder:text-gray-500 focus:border-red-900 focus:ring-1 
-                focus:ring-red-900/50 focus:ring-offset-1 "
+                focus:ring-red-900/50 focus:ring-offset-1"
             />
             {searchQuery && (
               <button
@@ -91,15 +91,15 @@ const Home: NextPage<{ images: ImageProps[] }> = ({ images }) => {
             <Image
               alt="Диктант Победы 2025"
               className="rounded-lg border border-red-900 object-cover brightness-90
-        transition-transform will-change-auto group-hover:brightness-110"
+                transition-transform will-change-auto group-hover:brightness-110"
               style={{ transform: "translate3d(0, 0, 0)" }}
               src="/logo.png"
               width={720}
               height={480}
               sizes="(max-width: 640px) 100vw,
-            (max-width: 1280px) 50vw,
-            (max-width: 1536px) 33vw,
-            25vw"
+                (max-width: 1280px) 50vw,
+                (max-width: 1536px) 33vw,
+                25vw"
             />
           )}
 
@@ -110,11 +110,13 @@ const Home: NextPage<{ images: ImageProps[] }> = ({ images }) => {
               as={`/victory/${id}`}
               ref={id === Number(lastViewedPhoto) ? lastViewedPhotoRef : null}
               shallow
-              className="group relative block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight after:content-['']"
+              className="group relative block w-full cursor-zoom-in after:pointer-events-none 
+                after:absolute after:inset-0 after:rounded-lg after:shadow-highlight after:content-['']"
             >
               <Image
                 alt="Диктант Победы 2025"
-                className="rounded-lg brightness-90 transition-transform duration-200 will-change-auto group-hover:scale-[1.02]"
+                className="rounded-lg brightness-90 transition-transform duration-200 
+                  will-change-auto group-hover:scale-[1.02]"
                 style={{ transform: "translate3d(0, 0, 0)" }}
                 placeholder="blur"
                 blurDataURL={blurDataUrl}
@@ -122,9 +124,9 @@ const Home: NextPage<{ images: ImageProps[] }> = ({ images }) => {
                 width={720}
                 height={480}
                 sizes="(max-width: 640px) 100vw,
-              (max-width: 1280px) 50vw,
-              (max-width: 1536px) 33vw,
-              25vw"
+                  (max-width: 1280px) 50vw,
+                  (max-width: 1536px) 33vw,
+                  25vw"
               />
             </Link>
           ))}
@@ -132,7 +134,9 @@ const Home: NextPage<{ images: ImageProps[] }> = ({ images }) => {
           {filteredImages.length === 0 && (
             <div className="col-span-full py-12">
               <div className="flex flex-col items-center justify-center space-y-6 text-center">
-                <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-red-600 to-red-800 p-4 shadow-lg shadow-red-900/30">
+                <div className="mx-auto flex h-24 w-24 items-center justify-center 
+                  rounded-full bg-gradient-to-br from-red-600 to-red-800 p-4 shadow-lg 
+                  shadow-red-900/30">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-16 w-16 text-white/90"
@@ -159,7 +163,8 @@ const Home: NextPage<{ images: ImageProps[] }> = ({ images }) => {
                     Ничего не найдено по запросу
                   </h2>
                   <div className="text-lg sm:text-xl">
-                    <span className="bg-gradient-to-r from-red-400 to-red-600 bg-clip-text font-medium text-transparent">
+                    <span className="bg-gradient-to-r from-red-400 to-red-600 bg-clip-text 
+                      font-medium text-transparent">
                       "{searchQuery}"
                     </span>
                   </div>
@@ -183,37 +188,55 @@ const Home: NextPage<{ images: ImageProps[] }> = ({ images }) => {
 export default Home;
 
 export async function getStaticProps() {
+  if (!process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME) {
+    throw new Error("NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME is not defined");
+  }
+
+  if (!process.env.CLOUDINARY_FOLDER) {
+    throw new Error("CLOUDINARY_FOLDER is not defined");
+  }
+
   const results = await cloudinary.v2.search
     .expression(`folder:${process.env.CLOUDINARY_FOLDER}/*`)
     .sort_by("public_id", "asc")
-    .max_results(400)
+    .max_results(600)
     .execute();
 
-  let reducedResults: ImageProps[] = [];
-  let i = 0;
-  for (const result of results.resources) {
-    reducedResults.push({
-      id: i,
+  const reducedResults: ImageProps[] = results.resources.map(
+    (result: any, index: number) => ({
+      id: index,
       height: result.height,
       width: result.width,
       public_id: result.public_id,
       format: result.format,
-    });
-    i++;
-  }
-
-  const blurImagePromises = results.resources.map((image: ImageProps) =>
-    getBase64ImageUrl(image)
+    })
   );
-  const imagesWithBlurDataUrls = await Promise.all(blurImagePromises);
 
-  for (let i = 0; i < reducedResults.length; i++) {
-    reducedResults[i].blurDataUrl = imagesWithBlurDataUrls[i];
-  }
+  const limit = pLimit(5);
+  const blurPromises = reducedResults.map(image =>
+    limit(async () => {
+      try {
+        return await getBase64ImageUrl(image);
+      } catch (error) {
+        console.warn(`Skipping image ${image.public_id}:`, error.message);
+        return null;
+      }
+    })
+  );
+
+  const imagesWithBlur = await Promise.all(blurPromises);
+
+  const validImages = reducedResults
+    .map((image, index) => ({
+      ...image,
+      blurDataUrl: imagesWithBlur[index] || "",
+    }))
+    .filter(image => image.blurDataUrl);
 
   return {
     props: {
-      images: reducedResults,
+      images: validImages,
     },
+    revalidate: 60 * 60,
   };
 }
