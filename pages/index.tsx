@@ -47,8 +47,8 @@ const Home: NextPage<{ images: ImageProps[] }> = ({ images }) => {
               placeholder="Поиск по фамилии..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-lg border border-gray-50 bg-black px-4 py-3 pr-12
-                text-base text-slate-50 shadow-xl shadow-red-900/20 transition-all duration-200
+              className="w-full rounded-lg border border-gray-400 bg-black px-4 py-3 pr-12
+                text-base text-gray-50 shadow-xl shadow-red-900/20 transition-all duration-200
                 placeholder:text-gray-500 focus:border-red-900 focus:ring-1 
                 focus:ring-red-900/50 focus:ring-offset-1 "
             />
