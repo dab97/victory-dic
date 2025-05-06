@@ -33,10 +33,7 @@ const Home: NextPage<{ images: ImageProps[] }> = ({ images }) => {
     <div className="flex min-h-screen flex-col">
       <Head>
         <title>Диктант Победы 2025</title>
-        <meta
-          property="og:image"
-          content="https://victory-dict.vercel.app/og-image.png"
-        />
+        <meta property="og:image" content="https://victory-dict.vercel.app/og-image.png" />
       </Head>
 
       <main className="mx-auto max-w-[1960px] flex-1 p-4">
